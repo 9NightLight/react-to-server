@@ -1,5 +1,6 @@
 import './App.css';
 import PostList from './components/PostList';
+import PostForm from './components/PostForm';
 import axios from 'axios';
 import React from 'react';
 
@@ -18,8 +19,18 @@ function App() {
 
   function ConnectServer() {
     axios.post("http://localhost:4000/users/authenticate", { "username": "test", "password": "test" })
-    .then(res => (dispatch({type: "load", data: {firstName: res.data.firstName, lastName: res.data.lastName, username: res.data.username}})))
-    .then(console.log(response.firstName))
+    .then(res => (dispatch({type: "load", data: {firstName: res.data.firstName, lastName: res.data.lastName, username: res.data.username}}), console.log(res.data.firstName)))
+  }
+
+  function GetToken() {
+    let username = "username";
+    let password = "password";
+    return Buffer.from(`${username}:${password}`).toString("base64")
+  }
+
+  function GetRequest() {
+    axios.get("http://localhost:4000/users/GETpage", {headers: { "Authorization":`Basic ${()=>GetToken()}` } })
+    .then(res => console.log(res.data))
   }
 
   function DisplayResponse() {
@@ -34,9 +45,11 @@ function App() {
 
   return (
     <div className="App">
-      <PostList />
+      <PostForm />
+      {/* <PostList />
       <div className='Box' onClick={()=>ConnectServer()}>Authorisation</div>
-      {DisplayResponse()}
+      <div className='Box' onClick={()=>GetRequest()}>Get Function</div>
+      {DisplayResponse()} */}
     </div>
   );
 }

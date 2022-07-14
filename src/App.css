@@ -38,11 +38,12 @@
 }
 
 .Box {
-  width: 52px;
+  width: 140px;
   height: 40px;
   background-color: orange;
   display:flex;
   justify-content: center;
   align-items: center;
   margin-left: 200px;
+  margin-top: 10px;
 }
